@@ -102,7 +102,7 @@
 
       <fieldset class="form__element form__element--wide">
         <label for="title">Заголовок объявления</label>
-        <input id="title" name="title" type="text" placeholder="Милая, уютная квартирка в центре Токио">
+        <input id="title" name="title" type="text" placeholder="Милая, уютная квартирка в центре Токио" minlength="30" maxlength="100" required>
       </fieldset>
 
       <fieldset class="form__element form__element--wide">
@@ -113,16 +113,16 @@
       <fieldset class="form__element">
         <label for="type">Тип жилья</label>
         <select id="type" name="type">
-          <option value="flat" selected>Квартира</option>
-          <option value="bungalo">Лачуга</option>
-          <option value="house">Дом</option>
-          <option value="palace">Дворец</option>
+          <option value="flat" selected minlength="1000">Квартира</option>
+          <option value="bungalo" minlength="0">Лачуга</option>
+          <option value="house" minlength="5000">Дом</option>
+          <option value="palace" minlength="10000">Дворец</option>
         </select>
       </fieldset>
 
       <fieldset class="form__element">
         <label for="price">Цена за ночь, руб.</label>
-        <input id="price" name="price" type="number" placeholder="5000">
+        <input id="price" name="price" type="number" placeholder="5000" maxlength="1000000" required>
       </fieldset>
 
       <fieldset class="form__element">
