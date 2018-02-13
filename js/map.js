@@ -1,77 +1,77 @@
 'use strict';
 
-var random = function(min, max) {
-	return (Math.random() * (max - min) + min).toFixed();
+var random = function (min, max) {
+		return (Math.random() * (max - min) + min).toFixed();
 };
 
-var title = ["Большая уютная квартира", "Маленькая неуютная квартира", "Огромный прекрасный дворец",
-	"Маленький ужасный дворец", "Красивый гостевой домик", "Некрасивый негостеприимный домик",
-	"Уютное бунгало далеко от моря", "Неуютное бунгало по колено в воде"];
-var type = ["flat", "house", "bungalo"];
-var checkin = ["12:00", "13:00", "14:00"];
-var checkout = ["12:00", "13:00", "14:00"];
-var features = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
+var title = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец',
+	'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик',
+	'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
+var type = ['flat', 'house', 'bungalo'];
+var checkin = ['12:00', '13:00', '14:00'];
+var checkout = ['12:00', '13:00', '14:00'];
+var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
 var arr = [];
 
-for ( var i = 1; i <= 8; i++) {
-	var obj = {
-		"author": {
-			"avatar": 'img/avatars/user0' + i + '.png'
-		},
-
-		"location":{
-			"x":random(300, 900),
-			"y":random(150, 500)
-		},
-
-		"offer": {
-			"title":title.pop(),
-			"address": function() {
-				return location.x.toString()+', '+location.y.toString()
+for (var i = 1; i <= 8; i++) {
+		var obj = {
+			'author': {
+				'avatar': 'img/avatars/user0' + i + '.png'
 			},
-			"price":random(1000, 1000000),
-			"type":type[random(0,2)] ,
-			"rooms":random(1, 5),
-			"guests":random(1, 8),
-			"checkin":checkin[random(0,2)],
-			"checkout":checkout[random(0,2)],
-			"features":features.filter(function(number, index){
-				if (index>random(0, 5)) {
-					return number;
-				};
-			}),
-			"description":'',
-			"photos":[]
-		}
 
-	};
-	arr.push(obj);
+			'location':{
+				'x':random(300, 900),
+				'y':random(150, 500)
+			},
+
+			'offer': {
+				'title': title.pop(),
+				'address': function() {
+					return location.x.toString()+', '+location.y.toString()
+				},
+				'price': random(1000, 1000000),
+				'type': type[random(0,2)] ,
+				'rooms': random(1, 5),
+				'guests': random(1, 8),
+				'checkin': checkin[random(0,2)],
+				'checkout': checkout[random(0,2)],
+				'features': features.filter (function(number, index){
+					if (index>random(0, 5)) {
+						return number;
+					};
+				}),
+				'description': '',
+				'photos': []
+			}	
+
+		};
+		arr.push(obj);
 }
 
-var el = document.querySelector(".map--faded");
-    el.classList.remove("map--faded");
+var el = document.querySelector('.map--faded');
+    el.classList.remove('map--faded');
 
 var fragment = document.createDocumentFragment();
 
 for (var i = 0; i < 8; i++){
 
-	var elementButton = document.createElement("button");
-		elementButton.className = "map__pin";
-		elementButton.setAttribute("style", "left:" + arr[i].location.x + 'px' + "; top:" + arr[i].location.y + 'px');
+	var elementButton = document.createElement('button');
+		elementButton.className = 'map__pin';
+		elementButton.setAttribute('style', 'left:' + arr[i].location.x + 'px' + '; top:' + arr[i].location.y + 'px');
 
-	var img = document.createElement("img");
-	    img.setAttribute("src", arr[i].author.avatar);
-	    img.setAttribute("width", "40");
-	    img.setAttribute("height", "40");
-	    img.setAttribute("draggable","false");
+	var img = document.createElement('img');
+	    img.setAttribute('src', arr[i].author.avatar);
+	    img.setAttribute('width', '40');
+	    img.setAttribute('height', '40');
+	    img.setAttribute('draggable','false');
 
 	elementButton.appendChild(img);
 
 	fragment.appendChild(elementButton);
 }
 
-var insertEl = document.querySelector(".map__pins");
+var insertEl = document.querySelector('.map__pins');
     insertEl.appendChild(fragment);
 
 var mapCardTemplate = document.querySelector('template').content.querySelector('.map__card');
@@ -106,3 +106,35 @@ for (i = 0; i < arr.length; i++) {
 }
 
 mapCardTemplate.insertAdjacentHTML('beforeend', '.map__filters-container');
+
+//неактивное состояние страницы
+var map = document.querySelector('.map');
+var noticeForm = document.querySelector('.notice__form');
+var mapPinMain = document.querySelector('.map__pin--main');
+	noticeForm.classList.add('notice__form--disabled');
+	map.classList.add('map--faded');
+	noticeForm.setAttribute('value','disabled');
+	
+//активация старницы
+	mapPinMain.addEventListener('mouseup', function() {
+	noticeForm.classList.remove('notice__form--disabled');
+	map.classList.remove('map--faded');
+	noticeForm.setAttribute('value','disabled');
+	});
+
+//Зпаолнение адреса
+var address = document.querySelector('#address');
+var addAdress = function (element) {
+	address.value = element.offsetLeft + ', ' + element.offsetTop;
+};
+
+//Просмотр похожих объявлений:
+//Открытие карточки
+var cardsAll = map.querySelectorAll('.map__card');
+	cardsAll.addEventListener('click', function() {
+		classList.remove('hidden');
+	});
+
+//Закрытие карточки
+
+
